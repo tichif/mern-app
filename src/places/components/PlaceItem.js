@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './PlaceItem.css';
 import Card from '../../shared/components/UIElements/Card';
+import Button from '../../shared/components/FormElements/Button';
 
 const PlaceItem = ({
   place: { id, imageUrl, title, description, address, creator, location },
@@ -19,9 +20,9 @@ const PlaceItem = ({
           <p>{description}</p>
         </div>
         <div className='place-item__actions'>
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <Button inverse>VIEW ON MAP</Button>
+          <Button to={`/places/${id}`}>EDIT</Button>
+          <Button danger>DELETE</Button>
         </div>
       </Card>
     </li>
