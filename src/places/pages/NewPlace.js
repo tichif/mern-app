@@ -1,6 +1,6 @@
 import React, { useCallback, useReducer } from 'react';
 
-import './NewPlace.css';
+import './PlaceForm.css';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
@@ -43,6 +43,10 @@ const NewPlace = () => {
         isValid: false,
       },
       description: {
+        value: '',
+        isValid: false,
+      },
+      address: {
         value: '',
         isValid: false,
       },
