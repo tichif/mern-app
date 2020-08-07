@@ -31,13 +31,13 @@ const Input = ({
   errorText,
   validators,
   onInput,
-  valueInput,
-  valid,
+  initialValue,
+  initialValid,
 }) => {
   // The second argument is the initial state
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: valueInput || '',
-    isValid: valid || false,
+    value: initialValue || '',
+    isValid: initialValid || false,
     isTouched: false,
   });
 
