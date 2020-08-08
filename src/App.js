@@ -7,6 +7,7 @@ import Users from './user/pages/Users';
 import NewPlace from './places/pages/NewPlace';
 import UserPlaces from './places/pages/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace';
+import Auth from './user/pages/Auth';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path='/places/new' component={NewPlace}></Route>
           <Route exact path='/:userId/places' component={UserPlaces}></Route>
           <Route exact path='/places/:placeId' component={UpdatePlace}></Route>
+          <Route exact path='/auth' component={Auth}></Route>
         </Switch>
       </main>
     </Router>
