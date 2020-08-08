@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './Auth.css';
 import Card from '../../shared/components/UIElements/Card';
@@ -7,11 +7,14 @@ import Input from '../../shared/components/FormElements/Input';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
+  VALIDATOR_REQUIRE,
 } from '../../shared/utils/validator';
 import { useForm } from '../../shared/hooks/form-hooks';
 
 const Auth = () => {
-  const [formState, inputHandler] = useForm(
+  const [isLoginMode, setIsLoginMode] = useState(true);
+
+  const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
         value: '',
@@ -25,16 +28,55 @@ const Auth = () => {
     false
   );
 
-  const loginHandler = (e) => {
+  // Submit the form
+  const submitHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs);
   };
 
+  // Switch mode functionality
+  const switchModeHandler = () => {
+    if (!isLoginMode) {
+      // Signup mode to login form
+      setFormData(
+        {
+          ...formState.inputs,
+          name: undefined,
+        },
+        formState.inputs.email.isValid && formState.inputs.password.isvalid
+      );
+    } else {
+      // login mode to signup mode
+      setFormData(
+        {
+          ...formState.inputs,
+          name: {
+            value: '',
+            isValid: false,
+          },
+        },
+        false
+      );
+    }
+    setIsLoginMode((prevMode) => !prevMode);
+  };
+
   return (
     <Card className='authentication'>
-      <h2>Login required</h2>
+      <h2>{isLoginMode ? 'LOGIN' : 'SIGNUP'}</h2>
       <hr />
       <form>
+        {!isLoginMode && (
+          <Input
+            element='input'
+            label='Name'
+            type='name'
+            id='name'
+            onInput={inputHandler}
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText='Please enter a valid name'
+          ></Input>
+        )}
         <Input
           element='input'
           label='Email'
@@ -56,11 +98,14 @@ const Auth = () => {
         <Button
           type='submit'
           disabled={!formState.isValid}
-          onClick={loginHandler}
+          onClick={submitHandler}
         >
-          SUBMIT
+          {isLoginMode ? 'LOGIN' : 'SIGNUP'}
         </Button>
       </form>
+      <Button inverse onClick={switchModeHandler}>
+        SWITCH TO {!isLoginMode ? 'LOGIN' : 'SIGNUP'}
+      </Button>
     </Card>
   );
 };
