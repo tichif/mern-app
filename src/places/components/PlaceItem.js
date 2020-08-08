@@ -10,11 +10,28 @@ import Map from '../../shared/components/UIElements/Map';
 const PlaceItem = ({
   place: { id, imageUrl, title, description, address, creator, location },
 }) => {
+  // State of the map modal
   const [showMap, setShowMap] = useState(false);
+  // State of the delete modal
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+  // Open the map modal
   const openMapHandler = () => setShowMap(true);
 
+  // Close the map modal
   const closeMapHandler = () => setShowMap(false);
+
+  // Show the delete modal
+  const showWarningHandler = () => setShowConfirmModal(true);
+
+  // Hide or close the delete modal
+  const cancelDeleteHandler = () => setShowConfirmModal(false);
+
+  // Delete the place
+  const deletePlaceHandler = () => {
+    console.log(`Place ${id} deleted`);
+    setShowConfirmModal(false);
+  };
 
   return (
     <Fragment>
@@ -29,6 +46,24 @@ const PlaceItem = ({
         <div className='map-container'>
           <Map center={location} zoom={16}></Map>
         </div>
+      </Modal>
+      <Modal
+        headerText='Are you sure?'
+        show={showConfirmModal}
+        onCancel={cancelDeleteHandler}
+        footerClass='place-item__modal-actions'
+        footer={
+          <Fragment>
+            <Button delete onClick={deletePlaceHandler}>
+              YES
+            </Button>
+            <Button onClick={cancelDeleteHandler} inverse>
+              NO
+            </Button>
+          </Fragment>
+        }
+      >
+        <p>Do you want to proceed and delete this place?</p>
       </Modal>
       <li className='place-item'>
         <Card className='place-item__content'>
@@ -45,7 +80,9 @@ const PlaceItem = ({
               VIEW ON MAP
             </Button>
             <Button to={`/places/${id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button danger onClick={showWarningHandler}>
+              DELETE
+            </Button>
           </div>
         </Card>
       </li>
