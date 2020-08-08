@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import './PlaceForm.css';
+import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import { useForm } from '../../shared/hooks/form-hooks';
@@ -26,7 +27,7 @@ const DUMMY_PLACES = [
   },
   {
     id: 'p2',
-    title: 'Empire State Building',
+    title: 'Emp. State Building',
     description: 'One of the most sky scrappers in the world',
     imageUrl:
       'https://upload.wikimedia.org/wikipedia/commons/1/10/Empire_State_Building_%28aerial_view%29.jpg',
@@ -42,21 +43,39 @@ const DUMMY_PLACES = [
 const UpdatePlace = () => {
   const placeId = useParams().placeId;
 
-  const identifiedPlace = DUMMY_PLACES.find((place) => place.id === placeId);
-
-  const [formState, inputHandler] = useForm(
+  const [loading, setLoading] = useState(true);
+  const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: identifiedPlace.title,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
       description: {
-        value: identifiedPlace.description,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
     },
-    true
+    false
   );
+  const identifiedPlace = DUMMY_PLACES.find((place) => place.id === placeId);
+  useEffect(() => {
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: {
+            value: identifiedPlace.title,
+            isValid: true,
+          },
+          description: {
+            value: identifiedPlace.description,
+            isValid: true,
+          },
+        },
+        true
+      );
+    }
+    setLoading(false);
+  }, [setFormData, identifiedPlace]);
 
   const placeSubmitHandler = (e) => {
     e.preventDefault();
@@ -67,6 +86,16 @@ const UpdatePlace = () => {
     return (
       <div className='center'>
         <h2>Could not found place</h2>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className='center'>
+        <Card>
+          <h2>Loading...</h2>
+        </Card>
       </div>
     );
   }

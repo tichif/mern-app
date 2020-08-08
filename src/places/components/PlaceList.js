@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './PlaceList.css';
 import Card from '../../shared/components/UIElements/Card';
+import Button from '../../shared/components/FormElements/Button';
 import PlaceItem from './PlaceItem';
 
 const PlaceList = ({ items }) => {
@@ -11,7 +12,7 @@ const PlaceList = ({ items }) => {
       <div className='place-list center'>
         <Card>
           <h2>There are no places</h2>
-          <button>CREATE</button>
+          <Button to='/places/new'>CREATE</Button>
         </Card>
       </div>
     );
