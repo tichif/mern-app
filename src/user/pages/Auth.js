@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import './Auth.css';
 import Card from '../../shared/components/UIElements/Card';
@@ -10,9 +10,11 @@ import {
   VALIDATOR_REQUIRE,
 } from '../../shared/utils/validator';
 import { useForm } from '../../shared/hooks/form-hooks';
+import { AuthContext } from '../../shared/context/auth-context';
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const auth = useContext(AuthContext);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -29,9 +31,30 @@ const Auth = () => {
   );
 
   // Submit the form
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
+    if (isLoginMode) {
+    } else {
+      try {
+        const response = await fetch('http://localhost:5000/api/users/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    auth.login();
   };
 
   // Switch mode functionality
