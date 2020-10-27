@@ -10,7 +10,11 @@ const UsersList = ({ items }) => {
       {items.length > 0 ? (
         <ul className='users-list'>
           {items.map((user) => (
-            <UserItem key={user.id} user={user}></UserItem>
+            <UserItem
+              key={user.id}
+              user={user}
+              placesCount={user.places.length}
+            ></UserItem>
           ))}
         </ul>
       ) : (

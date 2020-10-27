@@ -6,8 +6,8 @@ import './UserItem.css';
 import Avatar from '../../shared/components/UIElements/Avatar';
 import Card from '../../shared/components/UIElements/Card';
 
-const UserItem = ({ user }) => {
-  const { id, name, placesCount, image } = user;
+const UserItem = ({ user, placesCount }) => {
+  const { id, name, image } = user;
   return (
     <li className='user-item'>
       <Card className='user-item__content'>
