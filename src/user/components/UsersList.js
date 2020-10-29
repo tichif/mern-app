@@ -27,7 +27,7 @@ const UsersList = ({ items }) => {
 };
 
 UsersList.propTypes = {
-  item: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default UsersList;
