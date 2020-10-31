@@ -27,6 +27,12 @@ const UserPlaces = (props) => {
     fetchPlaces();
   }, [sendRequest, userId]);
 
+  const placeDeletedHandler = (deletePlaceId) => {
+    setLoadedPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletePlaceId)
+    );
+  };
+
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -36,7 +42,10 @@ const UserPlaces = (props) => {
         </div>
       )}
       {!isLoading && loadedPlaces && (
-        <PlaceList items={loadedPlaces}></PlaceList>
+        <PlaceList
+          onDelete={placeDeletedHandler}
+          items={loadedPlaces}
+        ></PlaceList>
       )}
     </Fragment>
   );
