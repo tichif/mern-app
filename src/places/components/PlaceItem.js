@@ -94,7 +94,7 @@ const PlaceItem = ({
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
+            {auth.isLoggedIn && auth.userId === creator && (
               <Fragment>
                 <Button to={`/places/${id}`}>EDIT</Button>
                 <Button danger onClick={showWarningHandler}>
