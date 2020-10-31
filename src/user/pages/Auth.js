@@ -4,6 +4,7 @@ import './Auth.css';
 import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
 import Input from '../../shared/components/FormElements/Input';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import {
@@ -37,6 +38,7 @@ const Auth = () => {
   // Submit the form
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(formState.inputs);
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -83,6 +85,7 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isvalid
       );
@@ -93,6 +96,10 @@ const Auth = () => {
           ...formState.inputs,
           name: {
             value: '',
+            isValid: false,
+          },
+          image: {
+            value: null,
             isValid: false,
           },
         },
@@ -111,15 +118,18 @@ const Auth = () => {
         <hr />
         <form>
           {!isLoginMode && (
-            <Input
-              element='input'
-              label='Name'
-              type='name'
-              id='name'
-              onInput={inputHandler}
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText='Please enter a valid name'
-            ></Input>
+            <Fragment>
+              <Input
+                element='input'
+                label='Name'
+                type='name'
+                id='name'
+                onInput={inputHandler}
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText='Please enter a valid name'
+              ></Input>
+              <ImageUpload id='image' center onInput={inputHandler} />
+            </Fragment>
           )}
           <Input
             element='input'
