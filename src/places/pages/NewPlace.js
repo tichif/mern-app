@@ -62,7 +62,7 @@ const NewPlace = () => {
 
   return (
     <Fragment>
-      <ErrorModal error={error} />
+      <ErrorModal error={error} onClear={clearError} />
       <form className='place-form' onSubmit={placeSubmitHandler}>
         {isLoading && <LoadingSpinner asOverlay />}
         <Input
