@@ -126,7 +126,12 @@ const Auth = () => {
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText='Please enter a valid name'
               ></Input>
-              <ImageUpload id='image' center onInput={inputHandler} />
+              <ImageUpload
+                id='image'
+                center
+                onInput={inputHandler}
+                errorText='Please provide a image'
+              />
             </Fragment>
           )}
           <Input
